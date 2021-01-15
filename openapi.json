@@ -1,0 +1,132 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "test api",
+    "version": "0.1.0"
+  },
+  "components": {
+    "schemas": {
+      "user": {
+        "type": "object",
+        "description": "ユーザー",
+        "required": [
+          "id",
+          "email",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "description": "ユーザーID",
+            "type": "integer",
+            "example": {
+              "value": 1
+            }
+          },
+          "email": {
+            "description": "メールアドレス",
+            "type": "string",
+            "format": "email",
+            "example": {
+              "value": "xxxxxx@example.com"
+            }
+          },
+          "name": {
+            "description": "ユーザー名",
+            "type": "string",
+            "minLength": 1,
+            "example": {
+              "value": "hoge"
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/users": {
+      "description": "ユーザー",
+      "post": {
+        "tags": [
+          "ユーザー（users）"
+        ],
+        "summary": "ユーザーの作成",
+        "description": "ユーザーを作成します。",
+        "operationId": "postUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "name"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "ユーザーのメールアドレス"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "ユーザーの名前",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "正常レスポンス",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "already exists."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "ユーザー（users）"
+        ],
+        "summary": "ユーザーリストの取得",
+        "description": "ユーザーリストを取得します。",
+        "operationId": "getUsers",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "email",
+            "description": "メールアドレス",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "正常レスポンス",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "description": "ユーザリスト",
+                  "items": {
+                    "$ref": "#/components/schemas/user"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
