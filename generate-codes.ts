@@ -16,7 +16,7 @@ const main = async () => {
 
 const { stringify: e } = JSON
 
- const makeApiClient: Converter.v3.Generator.MakeApiClientFunction = (
+const makeApiClient: Converter.v3.Generator.MakeApiClientFunction = (
 	context: ts.TransformationContext,
 	codeGeneratorParamsList: Converter.v3.CodeGeneratorParams[],
 ): ts.Statement[] => {

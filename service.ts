@@ -1,5 +1,5 @@
 import type { FastifyRequest as Req, FastifyReply as Rep } from 'fastify'
-import type  * as Api from './gen'
+import type * as Api from './gen'
 
 
 const list: Api.Schemas.user[] = [
@@ -26,9 +26,8 @@ export const service: Api.IService<[Req, Rep]> = {
 	},
 	postUser: async req => {
 		const body = req.body as Api.RequestBody$postUser['application/json']
-		if (list.some(s => s.name === body.name)) {
+		if (list.some(s => s.name === body.name || s.email === body.email))
 			throw new HttpError(400, 'already exists.')
-		}
 		const next = {
 			id: list.length + 1,
 			name: body.name,
